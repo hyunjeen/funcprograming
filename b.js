@@ -1,94 +1,37 @@
 var users = [
-  { id: 1, name: 'id', age: 36 },
-  { id: 2, name: 'bd', age: 32 },
-  { id: 3, name: 'cd', age: 32 },
-  { id: 4, name: 'dd', age: 27 },
-  { id: 5, name: 'ed', age: 25 },
-  { id: 6, name: 'rd', age: 26 },
-  { id: 7, name: 'td', age: 31 },
-  { id: 8, name: 'yd', age: 23 }
-];
+  { id: 'fw', name: 'i2ss', age: 30 },
+  { id: 'fe', name: 'ifss', age: 32 },
+  { id: 're', name: 'i3ss', age: 44 },
+]
+// 3 커링 함수
 
-// 1 명령형 코드
-
-//  1. 30세 이상인 users를 거른다
-var tempUsers = []
-for (var i = 0; i < users.length; i++) {
-  if (users[i].age >= 30) {
-    tempUsers.push(users[i]);
+function _curry(fn) {
+  return function (a, b) {
+    arguments.length == 2 ? fn(a, b) : function (b) { return fn(a, b); };
   }
 }
 
-console.log(tempUsers)
 
-// 2. 30세 이상인 users이 names를 수집한다
-
-var tempnames = [];
-for (var i = 0; i < tempUsers.length; i++) {
-  tempnames.push(tempUsers[i].name);
-}
-
-console.log(tempnames)
-
-// 3. 30세 미만인 users를 거른다
-
-var tempUsers = []
-for (var i = 0; i < users.length; i++) {
-  if (users[i].age < 30) {
-    tempUsers.push(users[i]);
+function _curryr(fn) {
+  return function (a, b) {
+    arguments.length == 2 ? fn(a, b) : function (b) { return fn(b, a); };
   }
 }
 
-console.log(tempUsers)
-
-// 4 30세 미만인 users의 ages를 수집한다.
-
-var tempnames = [];
-for (var i = 0; i < tempUsers.length; i++) {
-  tempnames.push(tempUsers[i].age);
-}
-
-console.log(tempnames)
-
-// 2. _filter, _map으로 리펙토링
-function _filter(list, predi) {
-  var new_list = []
-  for (var i = 0; i < list.length; i++) {
-    if (predi(list[i])) {
-      new_list.push(list[i]);
-    }
-  }
-  return new_list;
-}
-var over_30 = _filter(users, function(user) {
-  return user.age >= 30;
+var add = _curry(function (a, b) {
+  return a + b
 })
-console.log(_filter(users, function(user) {
-  return user.age >= 30;
-}))
+console.log(add(5, 6))
+console.log(add(5))
 
-console.log(_filter(users, function(user) {
-  return user.age < 30;
-}))
+//  get 함수
 
-console.log(_filter([1, 2, 3, 4], function(num) {
-  return num % 2;
-}))
-
-console.log(_filter([1, 2, 3, 4], function(num) {
-  return !(num % 2);
-}))
-
-function _map(tempUsers, mapper) {
-var new_list = [];
-for (var i = 0; i < tempUsers.length; i++) {
-  new_list.push(mapper(tempUsers[i]));
-
-}
-  return new_list;
+function _get(obj, key) {
+  return obj == null ? undefined : obj[key];
 }
 
-console.log(_map(over_30, function(user) {
-  return user.name;
-}))
+console.log(users[0].name)
+// console.log(users[6].name)
+console.log(_get(users[0], "name"))
+console.log(_get(users[6], "name"))
 
